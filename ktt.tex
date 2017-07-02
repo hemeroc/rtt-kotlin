@@ -1,0 +1,29 @@
+\documentclass[10pt,xcolor={dvipsnames}]{beamer}
+\usetheme{metropolis}
+\usepackage{listings}
+\usepackage{pgfpages}
+\usepackage{transparent}
+\usepackage{pifont}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+
+\newcommand{\tmark}{$\thicksim$}
+\newcommand{\cmark}{\ding{51}}
+\newcommand{\xmark}{\ding{55}}
+
+%\setbeameroption{show notes on second screen=bottom}
+
+\input{kt/meta}
+\input{kt/kt.code}
+
+\titlegraphic{\vspace{.1\textheight}\includegraphics[height=.125\textheight]{figures/kotlinLogo2}}
+
+\begin{document}
+{
+	\title{A modern JVM language}	
+	\maketitle
+}
+\input{kt/kt}
+
+\end{document}
