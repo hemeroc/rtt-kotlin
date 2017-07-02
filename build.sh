@@ -4,4 +4,4 @@ pdflatex ktt.tex
 pdflatex ktt.tex
 pdflatex ktt.tex
 
-pdfpc --duration=20 ktt.pdf
+pdfpc --disable-cache --last-minutes=5 --duration=20 ktt.pdf
