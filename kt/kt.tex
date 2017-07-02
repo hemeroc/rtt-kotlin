@@ -122,8 +122,9 @@ println("hello kotlin from latex")
 \end{frame}
 
 \begin{frame}[fragile]{Traps \& Pitfalls: Loopception}
-	\begin{onlyenv}<1->
-		\begin{lstlisting}[language=Kotlin]
+	\begin{overlayarea}{\textwidth}{\textheight}
+		\begin{onlyenv}<1->
+			\begin{lstlisting}[language=Kotlin]
 fun loopception() {
 	for(i in 1..2) {
 		print("$i")
@@ -133,58 +134,64 @@ fun loopception() {
 }}}
 
 fun main(args: Array<String>) = loopception()
-		\end{lstlisting}
-	\end{onlyenv}
-	\begin{onlyenv}<2->
-		\textbf{Outputs:} "1323"
-	\end{onlyenv}
+			\end{lstlisting}
+		\end{onlyenv}
+		\begin{onlyenv}<2->
+			\textbf{Outputs:} "1323"
+		\end{onlyenv}
+	\end{overlayarea}
 \end{frame}
 
 \begin{frame}[fragile]{Traps \& Pitfalls: Loopception}
-\begin{onlyenv}<1->
-	\begin{lstlisting}[language=Kotlin]
+	\begin{overlayarea}{\textwidth}{\textheight}
+		\begin{onlyenv}<1->
+			\begin{lstlisting}[language=Kotlin]
 fun loopception() {
-	outerLoop@for(i in 1..2) {
+	outerLoop@ for(i in 1..2) {
 		print("$i")
 		for (j in 3..4) {
 			print("$j")
-			if (j== 3) break@outerLoop
+			if (j == 3) break@outerLoop
 }}}
 
 fun main(args: Array<String>) = loopception()
-	\end{lstlisting}
-	\end{onlyenv}
-	\begin{onlyenv}<2->
-		\textbf{Outputs:} "13"\\\vspace{\baselineskip}
-	\end{onlyenv}
-	\begin{onlyenv}<3->
-		\textbf{return} \dots returns from the nearest enclosing function\\
-		\textbf{break} \dots terminates the nearest enclosing loop\\
-		\textbf{continue} \dots proceeds to the next step of the nearest enclosing loop
-	\end{onlyenv}
+			\end{lstlisting}
+		\end{onlyenv}
+		\begin{onlyenv}<2->
+			\textbf{Outputs:} "13"\\\vspace{\baselineskip}
+		\end{onlyenv}
+		\begin{onlyenv}<3->
+			\textbf{return} \dots returns from the nearest enclosing function\\
+			\textbf{break} \dots terminates the nearest enclosing loop\\
+			\textbf{continue} \dots proceeds to the next step of the nearest enclosing loop
+		\end{onlyenv}
+	\end{overlayarea}
 \end{frame}
 
 
 \begin{frame}[fragile]{Traps \& Pitfalls: The return of power throw}
-	\begin{onlyenv}<1->
-		\begin{lstlisting}[language=Kotlin]
+	\begin{overlayarea}{\textwidth}{.5\textheight}
+		\begin{onlyenv}<1->
+			\begin{lstlisting}[language=Kotlin]
 fun powerThrow() {
 	return throw throw return
 }
 
 fun main(args: Array<String>) = powerThrow()
-		\end{lstlisting}
-	\end{onlyenv}
-	\begin{onlyenv}<2->
-		Yep it compiles\\
-		return returns from the nearest enclosing function\\
-		return itself returns type Unit()
-	\end{onlyenv}
+			\end{lstlisting}
+		\end{onlyenv}
+		\begin{onlyenv}<2->
+			Yep it compiles\\
+			return returns from the nearest enclosing function\\
+			return itself returns type Unit()
+		\end{onlyenv}
+	\end{overlayarea}
 \end{frame}
 
 \begin{frame}[fragile]{Traps \& Pitfalls: Almighty Type Inference}
-	\begin{onlyenv}<1->
-		\begin{lstlisting}[language=Kotlin]
+	\begin{overlayarea}{\textwidth}{.6\textheight}
+		\begin{onlyenv}<1->
+			\begin{lstlisting}[language=Kotlin]
 fun hello() = print("Hello")
 fun world() = {
 	print(" World")
@@ -194,16 +201,18 @@ fun main(args: Array<String>) {
 	hello()
 	world()
 }	
-		\end{lstlisting}
-	\end{onlyenv}
-	\begin{onlyenv}<2->
-		\textbf{Output:} "Hello"
-	\end{onlyenv}
+			\end{lstlisting}
+		\end{onlyenv}
+		\begin{onlyenv}<2->
+			\textbf{Output:} "Hello"
+		\end{onlyenv}
+	\end{overlayarea}
 \end{frame}
 
 \begin{frame}[fragile]{Traps \& Pitfalls: Almighty Type Inference}
-	\begin{onlyenv}<1->
-		\begin{lstlisting}[language=Kotlin]
+	\begin{overlayarea}{\textwidth}{.6\textheight}
+		\begin{onlyenv}<1->
+			\begin{lstlisting}[language=Kotlin]
 fun hello(): Unit = print("Hello")
 fun world(): () -> Unit = {
 	print(" World")
@@ -213,11 +222,12 @@ fun main(args: Array<String>) {
 	hello()
 	world().invoke()
 }
-		\end{lstlisting}
-	\end{onlyenv}
-	\begin{onlyenv}<2->
-		\textbf{Output:} "Hello World"
-	\end{onlyenv}
+			\end{lstlisting}
+		\end{onlyenv}
+		\begin{onlyenv}<2->
+			\textbf{Output:} "Hello World"
+		\end{onlyenv}
+	\end{overlayarea}
 \end{frame}
 
 \section{Kotlin Native}
