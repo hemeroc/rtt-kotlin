@@ -1,3 +1,4 @@
+*.pdfpc
 *.pdf
 *.aux
 *.log
@@ -7,3 +8,4 @@
 *.toc
 *.synctex.gz
 *.vrb
+*.dvi
