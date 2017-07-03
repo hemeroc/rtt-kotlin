@@ -68,6 +68,7 @@
 		\item classes \& objects \tmark
 		\item nullable? (a billion dollar mistake !!) \cmark
 		\item Pairs \& Triples \& Deconstructing \cmark
+		\item operator overloading \cmark
 	\end{itemize}
 \cmark\ \dots\ full sample, \tmark\ \dots\ partial sample, \xmark\ \dots\ no sample
 \end{frame}
@@ -84,6 +85,8 @@
 		\item explicit module system \xmark
 		\item runs on android \xmark
 		\item can compile to JavaScript \xmark
+		\item inlining \& tail recursion \xmark
+		\item coroutines \tmark
 	\end{itemize}
 \cmark\ \dots\ full sample, \tmark\ \dots\ partial sample, \xmark\ \dots\ no sample
 \end{frame}
@@ -135,7 +138,7 @@
 \begin{frame}[fragile]{Code Samples: Var \& Val \& Data \& Boilerplate}
 	\begin{columns}
 		\begin{column}{0.5\textwidth}
-\begin{lstlisting}[language=Java,basicstyle=\ttfamily\tiny]
+\begin{lstlisting}[language=java,basicstyle=\ttfamily\tiny]
 public class CircleJava {
 
   private double radius;
@@ -202,7 +205,7 @@ data class CircleKotlinNicer(
   }
 }
 \end{lstlisting}
-\begin{lstlisting}[language=Java,basicstyle=\ttfamily\tiny]
+\begin{lstlisting}[language=java,basicstyle=\ttfamily\tiny]
 // Must be a static member
 public static void main(String[] args) {
   CircleKotlinNicer c =
@@ -331,6 +334,27 @@ fun main(args: Array<String>) {
 	\end{columns}
 \end{frame}
 
+\begin{frame}[fragile]{Code Samples: Operator Overloading}
+\begin{lstlisting}[language=Kotlin,basicstyle=\ttfamily\tiny]
+operator fun BigDecimal.plus(operand: BigDecimal) = this.add(operand)
+operator fun BigDecimal.minus(operand: BigDecimal) = this.subtract(operand)
+operator fun BigDecimal.times(operand: BigDecimal) = this.multiply(operand)
+operator fun BigDecimal.div(operand: BigDecimal) = this.divide(operand)
+
+fun Long.BD() = BigDecimal(this)
+fun Int.BD() = BigDecimal(this)
+fun Double.BD() = BigDecimal(this)
+
+fun main(args: Array<String>) {
+  val zeroPointFive = 0.5.BD()
+  println(1.BD() * zeroPointFive)
+  if(1L.BD() == BigDecimal(1)) {
+    println("Values are the same!")
+  }
+}
+\end{lstlisting}
+\end{frame}
+
 \begin{frame}[fragile]{Code Samples: Lazy Properties (Delegators)}
 	\begin{columns}
 		\begin{column}{0.5\textwidth}
@@ -391,6 +415,19 @@ fun main(args: Array<String>) {
   }
   print(sum)
 }
+
+fun main(args: Array<String>) {
+
+  val elements = hashMapOf(
+    1 to "x",
+    2 to "y",
+    3 to "z"
+  )
+
+  elements.forEach { _, value ->
+    println(value) }
+
+}
 \end{lstlisting}
 		\end{column}
 		\begin{column}{0.5\textwidth}
@@ -426,6 +463,9 @@ fun <T> lock(lock: Lock, body: () -> T): T {
 }
 
 fun toBeSynchronized() = System.`in`.read()
+val result1 = lock(lock, ::toBeSynchronized)
+val result2 = lock(lock,
+  () -> { sharedResource.operation() })
 \end{lstlisting}
 		\end{column}
 		\begin{column}{0.5\textwidth}
@@ -482,6 +522,58 @@ fun main(args: Array<String>) {
 	\end{columns}
 \end{frame}
 
+\begin{frame}[fragile]{Code Samples: Coroutines}
+	\begin{center}
+		\includegraphics[width=0.75\paperwidth]{figures/functionsInFunctionsFail}
+	\end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Code Samples: Coroutines}
+	\begin{center}
+		\includegraphics[width=0.5\paperwidth]{figures/functionsInFunctionsMeme}
+	\end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Code Samples: Coroutines}
+	\begin{overlayarea}{\textwidth}{.6\textheight}
+		\begin{columns}
+			\begin{column}{0.5\textwidth}
+				\begin{onlyenv}<1->
+\textbf{OutOfMemoryError:}
+\begin{lstlisting}[language=java,basicstyle=\ttfamily\tiny]
+for (i in 1..100_000) {
+  thread(start = true) {
+    Thread.sleep(1000)
+  }
+}
+\end{lstlisting}
+\textbf{Works fine:}
+\begin{lstlisting}[language=Kotlin,basicstyle=\ttfamily\tiny]
+val jobs = List(100_000) {
+  async(CommonPool) {
+    delay(1000L)
+    1
+  }
+}
+
+runBlocking { // bridge async world
+  println(jobs.sumBy {
+    it.await()
+  })
+}
+\end{lstlisting}
+				\end{onlyenv}
+			\end{column}
+			\begin{column}{0.5\textwidth}
+				\begin{onlyenv}<2->
+					\begin{center}
+						\includegraphics[width=\textwidth]{figures/twoStatesEveryProgrammer}
+					\end{center}
+				\end{onlyenv}
+			\end{column}
+		\end{columns}
+	\end{overlayarea}
+\end{frame}
 
 \begin{frame}[fragile]{Visibility And Modules}
 	\begin{columns}
@@ -517,7 +609,6 @@ fun main(args: Array<String>) {
 		\end{column}
 	\end{columns}
 \end{frame}
-
 
 \section{Traps \& Pitfalls}
 
