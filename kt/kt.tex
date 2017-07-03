@@ -88,9 +88,51 @@
 \cmark\ \dots\ full sample, \tmark\ \dots\ partial sample, \xmark\ \dots\ no sample
 \end{frame}
 
+\begin{frame}{Type Hierarchy}
+	\begin{columns}
+		\begin{column}{0.4\textwidth}
+			\begin{figure}[H]
+				\centering
+				\tikzumlset{fill class = black!10, fill template = white}
+				\begin{tikzpicture}[scale=0.6]
+				\umlsimpleclass[scale=0.6, x=0, y=3]{Any}
+				\umlsimpleclass[scale=0.6, x=-3, y=0]{Int}
+				\umlsimpleclass[scale=0.6, x=-1, y=0]{String}
+				\umlsimpleclass[scale=0.6, x=1, y=0]{Unit}
+				\umlsimpleclass[scale=0.6, x=3, y=0]{Custom}
+				\umlsimpleclass[scale=0.6, x=0, y=-3]{Nothing}
+				\umlinherit{Int}{Any}
+				\umlinherit{String}{Any}
+				\umlinherit{Unit}{Any}
+				\umlinherit{Custom}{Any}
+				\umlinherit{Nothing}{Int}
+				\umlinherit{Nothing}{String}
+				\umlinherit{Nothing}{Unit}
+				\umlinherit{Nothing}{Custom}
+				\end{tikzpicture}
+			\end{figure}
+		\end{column}
+		\begin{column}{0.6\textwidth}
+			\begin{itemize}
+				\item \textbf{Any}\\
+				\dots root of the non-null type hierarchy\\
+				Any?\\
+				\dots root of the nullable type hierarchy
+				\item \textbf{Unit}\\
+				no void functions\\
+				Unit instead
+				\item \textbf{Nothing}\\
+				bottom of the Kotlin type hierarchy\\
+				has no instance\\
+				expression of type nothing does not result in a value (e.g. throw)
+			\end{itemize}
+		\end{column}
+	\end{columns}
+\end{frame}
+
 \section{Code Samples}
 
-\begin{frame}[fragile]{Code Samples: Var / Val / Data / Boilerplate}
+\begin{frame}[fragile]{Code Samples: Var \& Val \& Data \& Boilerplate}
 	\begin{columns}
 		\begin{column}{0.5\textwidth}
 \begin{lstlisting}[language=Java,basicstyle=\ttfamily\tiny]
@@ -137,7 +179,8 @@ open class CircleKotlinAdvanced(radius:Double) {
 \end{lstlisting}
 \begin{lstlisting}[language=Kotlin,basicstyle=\ttfamily\tiny]
 // Nicer
-data class CircleKotlinNicer(val radius:Double = 0.0) {
+data class CircleKotlinNicer(
+  val radius:Double = 0.0) {
   companion object {
     const val PI = 3.1415
   }
@@ -147,50 +190,334 @@ data class CircleKotlinNicer(val radius:Double = 0.0) {
 	\end{columns}
 \end{frame}
 
-\begin{frame}[fragile]{Code Samples:}
-\begin{columns}
-	\begin{column}{0.5\textwidth}
-		\begin{lstlisting}[language=Kotlin,basicstyle=\ttfamily\tiny]
-
-		\end{lstlisting}
-	\end{column}
-	\begin{column}{0.5\textwidth}
-		\begin{lstlisting}[language=Kotlin,basicstyle=\ttfamily\tiny]
-
-		\end{lstlisting}
-	\end{column}
-\end{columns}
-
-\end{frame}
-\begin{frame}[fragile]{Code Samples:}
-\begin{columns}
-	\begin{column}{0.5\textwidth}
-		\begin{lstlisting}[language=Kotlin,basicstyle=\ttfamily\tiny]
-
-		\end{lstlisting}
-	\end{column}
-	\begin{column}{0.5\textwidth}
-		\begin{lstlisting}[language=Kotlin,basicstyle=\ttfamily\tiny]
-
-		\end{lstlisting}
-	\end{column}
-\end{columns}
-\end{frame}
-
-\begin{frame}[fragile]{Code Samples:}
-\begin{columns}
-	\begin{column}{0.5\textwidth}
+\begin{frame}[fragile]{Code Samples: Data \& Easy Mixing \& Static But Inferred Types}
+	\begin{columns}
+		\begin{column}{0.5\textwidth}
 \begin{lstlisting}[language=Kotlin,basicstyle=\ttfamily\tiny]
-
+// Nicer
+data class CircleKotlinNicer(
+  val radius:Double = 0.0) {
+  companion object {
+    const val PI = 3.1415
+  }
+}
 \end{lstlisting}
-	\end{column}
-	\begin{column}{0.5\textwidth}
+\begin{lstlisting}[language=Java,basicstyle=\ttfamily\tiny]
+// Must be a static member
+public static void main(String[] args) {
+  CircleKotlinNicer c =
+    new CircleKotlinNicer(5.0);
+  System.out.println(
+    CircleKotlinNicer.PI);
+  System.out.println(c.getRadius());
+  System.out.println(c);
+}
+\end{lstlisting}
+		\end{column}
+		\begin{column}{0.5\textwidth}
 \begin{lstlisting}[language=Kotlin,basicstyle=\ttfamily\tiny]
+// Top level functions
+fun main(args: Array<String>) {
+  val circle =
+    CircleKotlinNicer(5.0)
+  println(CircleKotlinNicer.PI)
+  println(circle.radius)
+  println(circle)
+}
 
+// Both outputs:
+// 
+// 
+// 
+//
+// 3.1415
+// 5.0
+// CircleKotlinNicer(radius=5.0)
 \end{lstlisting}
-	\end{column}
-\end{columns}
+		\end{column}
+	\end{columns}
 \end{frame}
+
+\begin{frame}[fragile]{Code Samples: Nullable? - The Billion Dollar Mistake}
+	\begin{columns}
+		\begin{column}{0.5\textwidth}
+\begin{lstlisting}[language=Kotlin,basicstyle=\ttfamily\tiny]
+fun main(args: Array<String>) {
+  var doubleValue:Double? = 1.0
+
+  println(doubleValue?.plus(1))
+
+  doubleValue = null
+
+  // This won't even compile
+  // println(circle.radius.plus(0))
+
+  println(doubleValue?.plus(1))
+
+  println(doubleValue!!.plus(1))
+
+}
+\end{lstlisting}
+		\end{column}
+		\begin{column}{0.5\textwidth}
+\begin{lstlisting}[language=Kotlin,basicstyle=\ttfamily\tiny]
+// Outputs:
+//
+//
+// 2.0
+// 
+// 
+// 
+// 
+// 
+//
+// null
+// 
+//
+// Exception in thread "main"
+// kotlin.KotlinNullPointerException
+\end{lstlisting}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+
+\begin{frame}[fragile]{Code Samples: Pairs \& Triples \& Deconstructing}
+	\begin{columns}
+		\begin{column}{0.5\textwidth}
+\begin{lstlisting}[language=Kotlin,basicstyle=\ttfamily\tiny]
+fun main(args: Array<String>) {
+
+  val elements =
+    ArrayList<Pair<String, String>>()
+
+  elements.add("Vienna" to "Austria")
+  elements.add("Berlin" to "Germany")
+  elements.add("Paris" to "France")
+
+  for(e in elements) {
+    println("${e.first} - ${e.second}")
+  }
+
+  for((city, country) in elements) {
+    println("$city - $country")
+  }
+
+}
+\end{lstlisting}
+		\end{column}
+		\begin{column}{0.5\textwidth}
+\begin{lstlisting}[language=Kotlin,basicstyle=\ttfamily\tiny]
+fun main(args: Array<String>) {
+
+  val elements =
+    ArrayList<Triple<String, String, Float>>()
+
+  elements.add(Triple("Vienna", "Austria", 1.741f))
+  elements.add(Triple("Berlin", "Germany", 3.502f))
+  elements.add(Triple("Paris", "France", 2.244f))
+
+   for (e in elements) {
+    println("${e.first} - ${e.second} - ${e.third}")
+  }
+
+  for ((city, country, residents) in elements) {
+    println("$city - $country - $residents")
+  }
+
+}
+\end{lstlisting}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{Code Samples: Lazy Properties (Delegators)}
+	\begin{columns}
+		\begin{column}{0.5\textwidth}
+\begin{lstlisting}[language=Kotlin,basicstyle=\ttfamily\tiny]
+class LazyKotline {
+  val lazyValue: String by lazy {
+    println("Computing Lazy Value")
+    "LazyValue"
+  }
+}
+
+fun main(args: Array<String>) {
+  val l = LazyKotline()
+  println(l.lazyValue)
+  println(l.lazyValue)
+}
+
+// Outputs:
+//
+// Computing Lazy Value
+// LazyValue
+// LazyValue
+\end{lstlisting}
+		\end{column}
+		\begin{column}{0.5\textwidth}
+\begin{lstlisting}[language=Kotlin,basicstyle=\ttfamily\tiny]
+class ObserverKotlin {
+  var observeableString: String by
+    Delegates.observable("<not set>") {
+      property, oldValue, newValue ->
+        println("$oldValue => $newValue")
+  }
+}
+
+fun main(args: Array<String>) {
+  val o = ObserverKotlin()
+  o.observeableString = "first"
+  o.observeableString = "second"
+}
+
+// Outputs:
+//
+// <not set> => first
+// first => second
+\end{lstlisting}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{Code Samples: Functional Programming (let it Lamda)}
+	\begin{columns}
+		\begin{column}{0.5\textwidth}
+\begin{lstlisting}[language=Kotlin,basicstyle=\ttfamily\tiny]
+fun main(args: Array<String>) {
+  var sum = 0
+  (-10..10).filter { it > 0 }.forEach {
+    sum += it
+  }
+  print(sum)
+}
+\end{lstlisting}
+		\end{column}
+		\begin{column}{0.5\textwidth}
+\begin{lstlisting}[language=Kotlin,basicstyle=\ttfamily\tiny]
+fun main(args: Array<String>) {
+
+  File("sample.txt").let {
+    it.createNewFile()
+  }
+
+  with(File("sample.txt")) {
+    createNewFile()
+  }
+
+}
+\end{lstlisting}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{Code Samples: Higher-Order Functions}
+	\begin{columns}
+		\begin{column}{0.5\textwidth}
+\begin{lstlisting}[language=Kotlin,basicstyle=\ttfamily\tiny]
+fun <T> lock(lock: Lock, body: () -> T): T {
+  lock.lock()
+  try {
+    return body()
+  }
+  finally {
+    lock.unlock()
+  }
+}
+
+fun toBeSynchronized() = System.`in`.read()
+\end{lstlisting}
+		\end{column}
+		\begin{column}{0.5\textwidth}
+\begin{lstlisting}[language=Kotlin,basicstyle=\ttfamily\tiny]
+fun main(args: Array<String>) {
+  val lock = ReentrantLock()
+
+  lock(lock, ::toBeSynchronized)
+
+  lock(lock, { System.`in`.read() })
+
+  lock (lock) {
+    System.`in`.read()
+  }
+
+}
+\end{lstlisting}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{Code Samples: Extension Methods}
+	\begin{columns}
+		\begin{column}{0.5\textwidth}
+\begin{lstlisting}[language=Kotlin,basicstyle=\ttfamily\tiny]
+fun String.hello() {
+  println("Hello")
+}
+
+fun String.nicerHello() {
+  println("Hello $this")
+}
+
+fun String.introduce(myName: String) {
+  println("Hello $this, I'm $myName")
+}
+\end{lstlisting}
+		\end{column}
+		\begin{column}{0.5\textwidth}
+\begin{lstlisting}[language=Kotlin,basicstyle=\ttfamily\tiny]
+fun main(args: Array<String>) {
+  "John Doe".hello()
+  "John Doe".nicerHello()
+  "John Doe".introduce("Jane Doe")
+}
+
+// Outouts
+//
+// Hello
+// Hello John Doe
+// Hello John Doe, I'm Jane Doe
+\end{lstlisting}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+
+\begin{frame}[fragile]{Visibility And Modules}
+	\begin{columns}
+		\begin{column}{0.45\textwidth}
+			Package-Level
+			\begin{itemize}
+				\item \textbf{public}\\
+				is used by default\\
+				declarations will be visible everywhere
+				\item \textbf{private}\\
+				only visible inside the file
+				\item \textbf{protected}\\
+				is not available for top-level declarations
+				\item \textbf{internal}\\
+				visible everywhere in the same module
+			\end{itemize}
+		\end{column}
+		\begin{column}{0.55\textwidth}
+			Class-Level
+			\begin{itemize}
+				\item \textbf{private}\\
+				visible inside this class only
+				\item \textbf{protected}\\
+				same as private and visible in subclasses too
+				\item \textbf{public}\\
+				any client who sees the declaring\\
+				class sees its public members
+				\item \textbf{internal}\\
+				any client inside this module\\
+				who sees the declaring class\\
+				sees its internal members
+			\end{itemize}
+		\end{column}
+	\end{columns}
+\end{frame}
+
 
 \section{Traps \& Pitfalls}
 
@@ -278,7 +605,7 @@ fun main(args: Array<String>) = powerThrow()
 		\begin{onlyenv}<2->
 			Yep it compiles\\
 			return returns from the nearest enclosing function\\
-			return itself returns type Unit()
+			return itself returns type Nothing()
 		\end{onlyenv}
 	\end{overlayarea}
 \end{frame}
