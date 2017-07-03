@@ -77,7 +77,6 @@
 
 \begin{frame}{Key Concepts \& Features}
 	\begin{itemize}
-		\item Kotlin script engine \xmark 
 		\item default to Unit instead of Void as return type \xmark 
 		\item no checked exceptions \xmark
 		\item functional programming (let it lamda) \tmark
@@ -88,6 +87,7 @@
 		\item can compile to JavaScript \xmark
 		\item inlining \& tail recursion \xmark
 		\item coroutines \tmark
+		\item kotlin script engine \xmark 
 	\end{itemize}
 \cmark\ \dots\ full sample, \tmark\ \dots\ partial sample, \xmark\ \dots\ no sample
 \end{frame}
@@ -292,56 +292,47 @@ fun main(args: Array<String>) {
 
 
 \begin{frame}[fragile]{Code Samples: Pairs \& Triples \& Deconstructing}
-	\begin{columns}
-		\begin{column}{0.45\textwidth}
 \begin{lstlisting}[language=Kotlin,basicstyle=\ttfamily\scriptsize]
 fun main(args: Array<String>) {
 
-  val el =
-    ArrayList<
-      Pair<String, String>>()
+  val elements = ArrayList<Pair<String, String>>()
 
-  el.add("Vienna" to "AT")
-  el.add("Berlin" to "DE")
-  el.add("Paris" to "FR")
+  elements.add("Vienna" to "Austria")
+  elements.add("Berlin" to "Germany")
+  elements.add("Paris" to "France")
 
-  for(e in el) {
-    println("${e.first} -
-${e.second}")
+  for(e in elements) {
+    println("${e.first} - ${e.second}")
   }
 
-  for((city, country) in el) {
+  for((city, country) in elements) {
     println("$city - $country")
   }
 
 }
 \end{lstlisting}
-		\end{column}
-		\begin{column}{0.55\textwidth}
+\end{frame}
+
+\begin{frame}[fragile]{Code Samples: Pairs \& Triples \& Deconstructing}
 \begin{lstlisting}[language=Kotlin,basicstyle=\ttfamily\scriptsize]
 fun main(args: Array<String>) {
 
-  val el =
-    ArrayList<
-      Triple<String, String, Float>>()
+  val elements = ArrayList<Triple<String, String, Float>>()
 
-  el.add(Triple("Vienna", "AT", 1.741f))
-  el.add(Triple("Berlin", "DE", 3.502f))
-  el.add(Triple("Paris", "FR", 2.244f))
+  elements.add(Triple("Vienna", "Austria", 1.741f))
+  elements.add(Triple("Berlin", "Germany", 3.502f))
+  elements.add(Triple("Paris", "France", 2.244f))
 
-   for (el in el) {
-    println("${e.first} - ${e.second} -
-${e.third}")
+   for (e in elements) {
+    println("${e.first} - ${e.second} - ${e.third}")
   }
 
-  for ((city, country, residents) in el) {
+  for ((city, country, residents) in elements) {
     println("$city - $country - $residents")
   }
 
 }
 \end{lstlisting}
-		\end{column}
-	\end{columns}
 \end{frame}
 
 \begin{frame}[fragile]{Code Samples: Operator Overloading}
@@ -459,11 +450,9 @@ fun main(args: Array<String>) {
 \end{frame}
 
 \begin{frame}[fragile]{Code Samples: Higher-Order Functions}
-	\begin{columns}
-		\begin{column}{0.55\textwidth}
+
 \begin{lstlisting}[language=Kotlin,basicstyle=\ttfamily\scriptsize]
-fun <T> lock(
-  lock: Lock, body: () -> T): T {
+fun <T> lock(lock: Lock, body: () -> T): T {
   lock.lock()
   try {
     return body()
@@ -473,31 +462,19 @@ fun <T> lock(
   }
 }
 
-fun toBeSynchronized() =
-  System.`in`.read()
-val result1 =
-  lock(lock, ::toBeSynchronized)
-val result2 = lock(lock,
-  () -> { sharedResource.operation() })
-\end{lstlisting}
-		\end{column}
-		\begin{column}{0.45\textwidth}
-\begin{lstlisting}[language=Kotlin,basicstyle=\ttfamily\scriptsize]
+fun toBeSynchronized() = System.`in`.read()
+val result1 = lock(lock, ::toBeSynchronized)
+val result2 = lock(lock, () -> { sharedResource.operation() })
+
 fun main(args: Array<String>) {
   val lock = ReentrantLock()
-
   lock(lock, ::toBeSynchronized)
-
   lock(lock, { System.`in`.read() })
-
   lock (lock) {
     System.`in`.read()
   }
-
 }
 \end{lstlisting}
-		\end{column}
-	\end{columns}
 \end{frame}
 
 \begin{frame}[fragile]{Code Samples: Extension Methods}
@@ -613,13 +590,13 @@ runBlocking { // bridge async world
 		\begin{column}{0.55\textwidth}
 			Class-Level
 			\begin{itemize}
+				\item \textbf{public}\\
+				any client who sees the declaring\\
+				class sees its public members
 				\item \textbf{private}\\
 				visible inside this class only
 				\item \textbf{protected}\\
 				same as private and visible in subclasses too
-				\item \textbf{public}\\
-				any client who sees the declaring\\
-				class sees its public members
 				\item \textbf{internal}\\
 				any client inside this module\\
 				who sees the declaring class\\
