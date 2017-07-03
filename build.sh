@@ -1,8 +1,8 @@
 #!/bin/bash
 
-pdflatex ktt.tex
-pdflatex ktt.tex
-pdflatex ktt.tex
+latexmk -xelatex ktt.tex 
+latexmk -xelatex ktt.tex 
+latexmk -xelatex ktt.tex 
 
 rm *.pdfpc
 rm *.aux
@@ -13,5 +13,9 @@ rm *.snm
 rm *.toc
 rm *.synctex.gz
 rm *.vrb
+rm *.fdb_latexmk
+rm *.fls
+rm *.xdv
+rm *.dvi
 
 pdfpc --disable-compression --last-minutes=5 --duration=20 ktt.pdf

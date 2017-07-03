@@ -9,3 +9,6 @@
 *.synctex.gz
 *.vrb
 *.dvi
+*.fdb_latexmk
+*.fls
+*.xdv

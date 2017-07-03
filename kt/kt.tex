@@ -124,17 +124,17 @@ println("hello kotlin from latex")
 \begin{frame}[fragile]{Traps \& Pitfalls: Loopception}
 	\begin{overlayarea}{\textwidth}{\textheight}
 		\begin{onlyenv}<1->
-			\begin{lstlisting}[language=Kotlin]
+\begin{lstlisting}[language=Kotlin]
 fun loopception() {
-	for(i in 1..2) {
-		print("$i")
-		for (j in 3..4) {
-			print("$j")
-			if (j== 3) break
+  for(i in 1..2) {
+  print("$i")
+    for (j in 3..4) {
+      print("$j")
+      if (j== 3) break
 }}}
 
 fun main(args: Array<String>) = loopception()
-			\end{lstlisting}
+\end{lstlisting}
 		\end{onlyenv}
 		\begin{onlyenv}<2->
 			\textbf{Outputs:} "1323"
@@ -145,17 +145,17 @@ fun main(args: Array<String>) = loopception()
 \begin{frame}[fragile]{Traps \& Pitfalls: Loopception}
 	\begin{overlayarea}{\textwidth}{\textheight}
 		\begin{onlyenv}<1->
-			\begin{lstlisting}[language=Kotlin]
+\begin{lstlisting}[language=Kotlin]
 fun loopception() {
-	outerLoop@ for(i in 1..2) {
-		print("$i")
-		for (j in 3..4) {
-			print("$j")
-			if (j == 3) break@outerLoop
+  outerLoop@ for(i in 1..2) {
+  print("$i")
+    for (j in 3..4) {
+      print("$j")
+      if (j == 3) break@outerLoop
 }}}
 
 fun main(args: Array<String>) = loopception()
-			\end{lstlisting}
+\end{lstlisting}
 		\end{onlyenv}
 		\begin{onlyenv}<2->
 			\textbf{Outputs:} "13"\\\vspace{\baselineskip}
@@ -172,13 +172,13 @@ fun main(args: Array<String>) = loopception()
 \begin{frame}[fragile]{Traps \& Pitfalls: The return of power throw}
 	\begin{overlayarea}{\textwidth}{.5\textheight}
 		\begin{onlyenv}<1->
-			\begin{lstlisting}[language=Kotlin]
+\begin{lstlisting}[language=Kotlin]
 fun powerThrow() {
-	return throw throw return
+  return throw throw return
 }
 
 fun main(args: Array<String>) = powerThrow()
-			\end{lstlisting}
+\end{lstlisting}
 		\end{onlyenv}
 		\begin{onlyenv}<2->
 			Yep it compiles\\
@@ -191,17 +191,17 @@ fun main(args: Array<String>) = powerThrow()
 \begin{frame}[fragile]{Traps \& Pitfalls: Almighty Type Inference}
 	\begin{overlayarea}{\textwidth}{.6\textheight}
 		\begin{onlyenv}<1->
-			\begin{lstlisting}[language=Kotlin]
+\begin{lstlisting}[language=Kotlin]
 fun hello() = print("Hello")
 fun world() = {
-	print(" World")
+  print(" World")
 }
 
 fun main(args: Array<String>) {
-	hello()
-	world()
+  hello()
+  world()
 }	
-			\end{lstlisting}
+\end{lstlisting}
 		\end{onlyenv}
 		\begin{onlyenv}<2->
 			\textbf{Output:} "Hello"
@@ -212,17 +212,17 @@ fun main(args: Array<String>) {
 \begin{frame}[fragile]{Traps \& Pitfalls: Almighty Type Inference}
 	\begin{overlayarea}{\textwidth}{.6\textheight}
 		\begin{onlyenv}<1->
-			\begin{lstlisting}[language=Kotlin]
+\begin{lstlisting}[language=Kotlin]
 fun hello(): Unit = print("Hello")
 fun world(): () -> Unit = {
-	print(" World")
+  print(" World")
 }
 
 fun main(args: Array<String>) {
-	hello()
-	world().invoke()
+  hello()
+  world().invoke()
 }
-			\end{lstlisting}
+\end{lstlisting}
 		\end{onlyenv}
 		\begin{onlyenv}<2->
 			\textbf{Output:} "Hello World"
@@ -233,32 +233,32 @@ fun main(args: Array<String>) {
 \section{Kotlin Native}
 
 \begin{frame}[fragile]{Kotlin Native: GTK3}
-	Check it out:\\
-	\begin{lstlisting}[language=bash,basicstyle=\ttfamily\small]
+	Check it out:\\\vspace{.5\baselineskip}
+\begin{lstlisting}[language=bash,basicstyle=\ttfamily\small]
 mkdir kotlin-native-samples && \
 cd kotlin-native-samples && \
 git init && \
 git config core.sparseCheckout true && \
 git remote add -f origin \
-	https://github.com/JetBrains/kotlin-native.git && \
+  https://github.com/JetBrains/kotlin-native.git && \
 echo "samples/*" > .git/info/sparse-checkout && \
 git checkout v0.3
-	\end{lstlisting}
+\end{lstlisting}
 \end{frame}
 
 \begin{frame}[fragile]{Kotlin Native: GTK3}
-	Compile your first sample:\\
-	\begin{lstlisting}[language=bash,basicstyle=\ttfamily\small]
+	Compile your first sample:\\\vspace{.5\baselineskip}
+\begin{lstlisting}[language=bash,basicstyle=\ttfamily\small]
 docker run --rm -ti --workdir /sample -u root \
 -v "$(pwd)/samples/gtk:/sample" \
 hemeroc/kotlin-native:v0.3.0 \
 /bin/bash -c \
 "apt-get update; apt-get install libgtk-3-dev; ./build.sh"
-	\end{lstlisting}
-	Try it out\\
-	\begin{lstlisting}[language=bash,basicstyle=\ttfamily\small]
+\end{lstlisting}
+	Try it out\\\vspace{.5\baselineskip}
+\begin{lstlisting}[language=bash,basicstyle=\ttfamily\small]
 ./samples/gtk/build/bin/Gtk3Demo.kexe
-	\end{lstlisting}
+\end{lstlisting}
 \end{frame}
 
 \begin{frame}[fragile]{Kotlin Native: GTK3}
@@ -267,38 +267,27 @@ hemeroc/kotlin-native:v0.3.0 \
 
 \section{Contribute \& Get Started}
 
-{
-\usebackgroundtemplate{\parbox[c][\paperheight][c]{\paperwidth}{\centering\transparent{0.1}\includegraphics[width=1\paperwidth]{figures/kotlinLogo1}}
-}%
-
 \begin{frame}{Contribute}
-	\vspace*{\stretch{1}}%
 	\begin{center}
 		\LARGE \href{https://youtrack.jetbrains.com/issues/KT/}{https://youtrack.jetbrains.com/issues/KT/}\\
 		\href{https://github.com/Kotlin/KEEP}{https://github.com/Kotlin/KEEP}
 	\end{center}
-	\vspace*{\stretch{1}}%
 \end{frame}
 
 \begin{frame}{Getting Started}
-	\vspace*{\stretch{1}}%
 	\begin{center}
 		\LARGE \href{https://kotlin.link/}{https://kotlin.link/}\\
 		\href{http://slack.kotlinlang.org/}{http://slack.kotlinlang.org/}\\
 		\href{https://github.com/Kotlin/kotlin-koans}{https://github.com/Kotlin/kotlin-koans}
 	\end{center}
-	\vspace*{\stretch{1}}%
 \end{frame}
-}
 
 \begin{frame}{Thank You}
-	\vspace*{\stretch{1}}%
 	\begin{center}
 		\LARGE Get started with\\
 		\vspace{.5cm}
-		{\transparent{1}\includegraphics[width=.5\paperwidth]{figures/kotlinLogo2}}\\
+		\includegraphics[width=.5\paperwidth]{figures/kotlinLogo2}\\
 		\vspace{.5cm}
 		\href{https://try.kotlinlang.org/}{https://try.kotlinlang.org/}
 	\end{center}
-	\vspace*{\stretch{1}}%
 \end{frame}
