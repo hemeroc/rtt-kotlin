@@ -138,13 +138,14 @@
 \begin{frame}[fragile]{Code Samples: Var \& Val \& Data \& Boilerplate}
 	\begin{columns}
 		\begin{column}{0.5\textwidth}
-\begin{lstlisting}[language=java,basicstyle=\ttfamily\tiny]
+\begin{lstlisting}[language=java,basicstyle=\ttfamily\scriptsize]
 public class CircleJava {
 
   private double radius;
-  private static final double PI = 3.1415;
+  private static final double
+    PI = 3.1415;
 
-  public CircleJava(double  radius) {
+  public CircleJava(double radius) {
     this.radius = radius;
   }
 
@@ -156,7 +157,8 @@ public class CircleJava {
     return radius;
   }
 
-  public void setRadius(double  radius) {
+  public void setRadius(
+    double radius) {
     this.radius = radius;
   }
 
@@ -164,23 +166,25 @@ public class CircleJava {
 \end{lstlisting}
 		\end{column}
 		\begin{column}{0.5\textwidth}
-\begin{lstlisting}[language=Kotlin,basicstyle=\ttfamily\tiny]
+\begin{lstlisting}[language=Kotlin,basicstyle=\ttfamily\scriptsize]
 // Simple
-class CircleKotlinSimple(radius:Double) {
+class CircleKotlinSimple(
+  radius:Double) {
   var radius:Double = 0.0
   val PI = 3.1415
 }
 \end{lstlisting}
-\begin{lstlisting}[language=Kotlin,basicstyle=\ttfamily\tiny]
+\begin{lstlisting}[language=Kotlin,basicstyle=\ttfamily\scriptsize]
 // Advanced
-open class CircleKotlinAdvanced(radius:Double) {
+open class CircleKotlinAdvanced(
+  radius:Double) {
   var radius:Double = 0.0
   companion object {
     const val PI = 3.1415
   }
 }
 \end{lstlisting}
-\begin{lstlisting}[language=Kotlin,basicstyle=\ttfamily\tiny]
+\begin{lstlisting}[language=Kotlin,basicstyle=\ttfamily\scriptsize]
 // Nicer
 data class CircleKotlinNicer(
   val radius:Double = 0.0) {
@@ -196,7 +200,7 @@ data class CircleKotlinNicer(
 \begin{frame}[fragile]{Code Samples: Data \& Easy Mixing \& Static But Inferred Types}
 	\begin{columns}
 		\begin{column}{0.5\textwidth}
-\begin{lstlisting}[language=Kotlin,basicstyle=\ttfamily\tiny]
+\begin{lstlisting}[language=Kotlin,basicstyle=\ttfamily\scriptsize]
 // Nicer
 data class CircleKotlinNicer(
   val radius:Double = 0.0) {
@@ -205,9 +209,10 @@ data class CircleKotlinNicer(
   }
 }
 \end{lstlisting}
-\begin{lstlisting}[language=java,basicstyle=\ttfamily\tiny]
+\begin{lstlisting}[language=java,basicstyle=\ttfamily\scriptsize]
 // Must be a static member
-public static void main(String[] args) {
+public static void main(
+  String[] args) {
   CircleKotlinNicer c =
     new CircleKotlinNicer(5.0);
   System.out.println(
@@ -218,7 +223,7 @@ public static void main(String[] args) {
 \end{lstlisting}
 		\end{column}
 		\begin{column}{0.5\textwidth}
-\begin{lstlisting}[language=Kotlin,basicstyle=\ttfamily\tiny]
+\begin{lstlisting}[language=Kotlin,basicstyle=\ttfamily\scriptsize]
 // Top level functions
 fun main(args: Array<String>) {
   val circle =
@@ -244,7 +249,7 @@ fun main(args: Array<String>) {
 \begin{frame}[fragile]{Code Samples: Nullable? - The Billion Dollar Mistake}
 	\begin{columns}
 		\begin{column}{0.5\textwidth}
-\begin{lstlisting}[language=Kotlin,basicstyle=\ttfamily\tiny]
+\begin{lstlisting}[language=Kotlin,basicstyle=\ttfamily\scriptsize]
 fun main(args: Array<String>) {
   var doubleValue:Double? = 1.0
 
@@ -263,7 +268,7 @@ fun main(args: Array<String>) {
 \end{lstlisting}
 		\end{column}
 		\begin{column}{0.5\textwidth}
-\begin{lstlisting}[language=Kotlin,basicstyle=\ttfamily\tiny]
+\begin{lstlisting}[language=Kotlin,basicstyle=\ttfamily\scriptsize]
 // Outputs:
 //
 //
@@ -287,44 +292,48 @@ fun main(args: Array<String>) {
 
 \begin{frame}[fragile]{Code Samples: Pairs \& Triples \& Deconstructing}
 	\begin{columns}
-		\begin{column}{0.5\textwidth}
-\begin{lstlisting}[language=Kotlin,basicstyle=\ttfamily\tiny]
+		\begin{column}{0.45\textwidth}
+\begin{lstlisting}[language=Kotlin,basicstyle=\ttfamily\scriptsize]
 fun main(args: Array<String>) {
 
-  val elements =
-    ArrayList<Pair<String, String>>()
+  val el =
+    ArrayList<
+      Pair<String, String>>()
 
-  elements.add("Vienna" to "Austria")
-  elements.add("Berlin" to "Germany")
-  elements.add("Paris" to "France")
+  el.add("Vienna" to "AT")
+  el.add("Berlin" to "DE")
+  el.add("Paris" to "FR")
 
-  for(e in elements) {
-    println("${e.first} - ${e.second}")
+  for(e in el) {
+    println("${e.first} -
+${e.second}")
   }
 
-  for((city, country) in elements) {
+  for((city, country) in el) {
     println("$city - $country")
   }
 
 }
 \end{lstlisting}
 		\end{column}
-		\begin{column}{0.5\textwidth}
-\begin{lstlisting}[language=Kotlin,basicstyle=\ttfamily\tiny]
+		\begin{column}{0.55\textwidth}
+\begin{lstlisting}[language=Kotlin,basicstyle=\ttfamily\scriptsize]
 fun main(args: Array<String>) {
 
-  val elements =
-    ArrayList<Triple<String, String, Float>>()
+  val el =
+    ArrayList<
+      Triple<String, String, Float>>()
 
-  elements.add(Triple("Vienna", "Austria", 1.741f))
-  elements.add(Triple("Berlin", "Germany", 3.502f))
-  elements.add(Triple("Paris", "France", 2.244f))
+  el.add(Triple("Vienna", "AT", 1.741f))
+  el.add(Triple("Berlin", "DE", 3.502f))
+  el.add(Triple("Paris", "FR", 2.244f))
 
-   for (e in elements) {
-    println("${e.first} - ${e.second} - ${e.third}")
+   for (el in el) {
+    println("${e.first} - ${e.second} -
+${e.third}")
   }
 
-  for ((city, country, residents) in elements) {
+  for ((city, country, residents) in el) {
     println("$city - $country - $residents")
   }
 
@@ -335,7 +344,7 @@ fun main(args: Array<String>) {
 \end{frame}
 
 \begin{frame}[fragile]{Code Samples: Operator Overloading}
-\begin{lstlisting}[language=Kotlin,basicstyle=\ttfamily\tiny]
+\begin{lstlisting}[language=Kotlin,basicstyle=\ttfamily\scriptsize]
 operator fun BigDecimal.plus(operand: BigDecimal) = this.add(operand)
 operator fun BigDecimal.minus(operand: BigDecimal) = this.subtract(operand)
 operator fun BigDecimal.times(operand: BigDecimal) = this.multiply(operand)
@@ -357,8 +366,8 @@ fun main(args: Array<String>) {
 
 \begin{frame}[fragile]{Code Samples: Lazy Properties (Delegators)}
 	\begin{columns}
-		\begin{column}{0.5\textwidth}
-\begin{lstlisting}[language=Kotlin,basicstyle=\ttfamily\tiny]
+		\begin{column}{0.45\textwidth}
+\begin{lstlisting}[language=Kotlin,basicstyle=\ttfamily\scriptsize]
 class LazyKotline {
   val lazyValue: String by lazy {
     println("Computing Lazy Value")
@@ -379,8 +388,8 @@ fun main(args: Array<String>) {
 // LazyValue
 \end{lstlisting}
 		\end{column}
-		\begin{column}{0.5\textwidth}
-\begin{lstlisting}[language=Kotlin,basicstyle=\ttfamily\tiny]
+		\begin{column}{0.55\textwidth}
+\begin{lstlisting}[language=Kotlin,basicstyle=\ttfamily\scriptsize]
 class ObserverKotlin {
   var observeableString: String by
     Delegates.observable("<not set>") {
@@ -406,8 +415,8 @@ fun main(args: Array<String>) {
 
 \begin{frame}[fragile]{Code Samples: Functional Programming (let it Lamda)}
 	\begin{columns}
-		\begin{column}{0.5\textwidth}
-\begin{lstlisting}[language=Kotlin,basicstyle=\ttfamily\tiny]
+		\begin{column}{0.55\textwidth}
+\begin{lstlisting}[language=Kotlin,basicstyle=\ttfamily\scriptsize]
 fun main(args: Array<String>) {
   var sum = 0
   (-10..10).filter { it > 0 }.forEach {
@@ -430,8 +439,8 @@ fun main(args: Array<String>) {
 }
 \end{lstlisting}
 		\end{column}
-		\begin{column}{0.5\textwidth}
-\begin{lstlisting}[language=Kotlin,basicstyle=\ttfamily\tiny]
+		\begin{column}{0.45\textwidth}
+\begin{lstlisting}[language=Kotlin,basicstyle=\ttfamily\scriptsize]
 fun main(args: Array<String>) {
 
   File("sample.txt").let {
@@ -450,9 +459,10 @@ fun main(args: Array<String>) {
 
 \begin{frame}[fragile]{Code Samples: Higher-Order Functions}
 	\begin{columns}
-		\begin{column}{0.5\textwidth}
-\begin{lstlisting}[language=Kotlin,basicstyle=\ttfamily\tiny]
-fun <T> lock(lock: Lock, body: () -> T): T {
+		\begin{column}{0.55\textwidth}
+\begin{lstlisting}[language=Kotlin,basicstyle=\ttfamily\scriptsize]
+fun <T> lock(
+  lock: Lock, body: () -> T): T {
   lock.lock()
   try {
     return body()
@@ -462,14 +472,16 @@ fun <T> lock(lock: Lock, body: () -> T): T {
   }
 }
 
-fun toBeSynchronized() = System.`in`.read()
-val result1 = lock(lock, ::toBeSynchronized)
+fun toBeSynchronized() =
+  System.`in`.read()
+val result1 =
+  lock(lock, ::toBeSynchronized)
 val result2 = lock(lock,
   () -> { sharedResource.operation() })
 \end{lstlisting}
 		\end{column}
-		\begin{column}{0.5\textwidth}
-\begin{lstlisting}[language=Kotlin,basicstyle=\ttfamily\tiny]
+		\begin{column}{0.45\textwidth}
+\begin{lstlisting}[language=Kotlin,basicstyle=\ttfamily\scriptsize]
 fun main(args: Array<String>) {
   val lock = ReentrantLock()
 
@@ -490,7 +502,7 @@ fun main(args: Array<String>) {
 \begin{frame}[fragile]{Code Samples: Extension Methods}
 	\begin{columns}
 		\begin{column}{0.5\textwidth}
-\begin{lstlisting}[language=Kotlin,basicstyle=\ttfamily\tiny]
+\begin{lstlisting}[language=Kotlin,basicstyle=\ttfamily\scriptsize]
 fun String.hello() {
   println("Hello")
 }
@@ -505,7 +517,7 @@ fun String.introduce(myName: String) {
 \end{lstlisting}
 		\end{column}
 		\begin{column}{0.5\textwidth}
-\begin{lstlisting}[language=Kotlin,basicstyle=\ttfamily\tiny]
+\begin{lstlisting}[language=Kotlin,basicstyle=\ttfamily\scriptsize]
 fun main(args: Array<String>) {
   "John Doe".hello()
   "John Doe".nicerHello()
@@ -524,23 +536,27 @@ fun main(args: Array<String>) {
 
 \begin{frame}[fragile]{Code Samples: Coroutines}
 	\begin{center}
-		\includegraphics[width=0.75\paperwidth]{figures/functionsInFunctionsFail}
+		\begin{figure}
+			\includegraphics[width=0.6\paperwidth]{figures/functionsInFunctionsFail}
+			\caption{Callback Hell}
+		\end{figure}
 	\end{center}
 \end{frame}
 
 \begin{frame}[fragile]{Code Samples: Coroutines}
 	\begin{center}
-		\includegraphics[width=0.5\paperwidth]{figures/functionsInFunctionsMeme}
+		\begin{figure}
+			\includegraphics[width=0.5\paperwidth]{figures/functionsInFunctionsMeme}
+		\end{figure}
 	\end{center}
 \end{frame}
 
 \begin{frame}[fragile]{Code Samples: Coroutines}
-	\begin{overlayarea}{\textwidth}{.6\textheight}
+	\begin{overlayarea}{\textwidth}{.8\textheight}
 		\begin{columns}
 			\begin{column}{0.5\textwidth}
-				\begin{onlyenv}<1->
-\textbf{OutOfMemoryError:}
-\begin{lstlisting}[language=java,basicstyle=\ttfamily\tiny]
+				\begin{onlyenv}<1->\textbf{OutOfMemoryError:}
+\begin{lstlisting}[language=java,basicstyle=\ttfamily\scriptsize]
 for (i in 1..100_000) {
   thread(start = true) {
     Thread.sleep(1000)
@@ -548,7 +564,7 @@ for (i in 1..100_000) {
 }
 \end{lstlisting}
 \textbf{Works fine:}
-\begin{lstlisting}[language=Kotlin,basicstyle=\ttfamily\tiny]
+\begin{lstlisting}[language=Kotlin,basicstyle=\ttfamily\scriptsize]
 val jobs = List(100_000) {
   async(CommonPool) {
     delay(1000L)
@@ -567,7 +583,9 @@ runBlocking { // bridge async world
 			\begin{column}{0.5\textwidth}
 				\begin{onlyenv}<2->
 					\begin{center}
-						\includegraphics[width=\textwidth]{figures/twoStatesEveryProgrammer}
+						\begin{figure}
+							\includegraphics[width=\textwidth]{figures/twoStatesEveryProgrammer}
+						\end{figure}
 					\end{center}
 				\end{onlyenv}
 			\end{column}
